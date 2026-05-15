@@ -1,6 +1,6 @@
 # SkillTree AI
 
-A dynamic computer science course generator powered by OpenAI GPT-4o.
+A dynamic computer science course generator powered by OpenAI GPT-4o-mini.
 
 ## Setup
 
@@ -29,7 +29,10 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 5. Add your API key to .env.
+Create a file named .env in the project root folder and add this line:
 OPENAI_API_KEY=your_api_key_here
+
+Replace your_api_key_here with your actual OpenAI API key
 
 6. Start the Flask server:
 python app.py
@@ -47,16 +50,3 @@ The app should now be running locally.
 - **Lesson viewer** — click any lesson in the sidebar to load full content: explanation, code examples, key concepts, and an exercise with hints
 - **Project panels** — each module has a hands-on project with a description
 - **Code feedback** — upload your project code file (.py, .js, .ts, .java, .c, .cpp, etc.) and get AI-powered review with scores, strengths, improvements, and next steps
-
-## Project Structure
-
-```
-code-lesson-creator/
-├── app.py          # Flask backend + OpenAI API calls
-├── requirements.txt
-├── .env            # Your API key (never commit this)
-└── static/
-    ├── index.html  # Single-page app shell
-    ├── style.css   # Dark theme UI
-    └── app.js      # Frontend logic
-```
