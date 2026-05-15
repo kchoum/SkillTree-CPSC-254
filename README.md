@@ -2,7 +2,7 @@
 
 A dynamic computer science course generator powered by OpenAI GPT-4o-mini.
 
-# Running in Visual Studio Code recommended
+# Running in Visual Studio Code recommended. Run all setup commands in Terminal.
 
 ## Setup
 
@@ -13,7 +13,7 @@ python --version
 or
 python3 --version
 
-2. Clone Github Repo.
+2. Clone Github Repo. Ignore if already cloned.
 
 git clone https://github.com/kchoum/SkillTree-CPSC-254.git
 cd SkillTree-CPSC-254
