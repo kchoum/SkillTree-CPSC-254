@@ -13,7 +13,7 @@ python3 --version
 
 2. Clone Github Repo.
 
-git clone https://github.com/kchoum/SkillTree-CPSC-254/tree/main
+git clone https://github.com/kchoum/SkillTree-CPSC-254.git
 cd SkillTree-CPSC-254
 
 3. Create a virtual environment
