@@ -1,0 +1,166 @@
+{
+  "validation_cases": [
+    {"input": "Binary Search Trees",        "expected_valid": true,  "note": "core CS data structure"},
+    {"input": "Machine Learning",           "expected_valid": true,  "note": "AI/ML domain"},
+    {"input": "Operating Systems",          "expected_valid": true,  "note": "systems CS"},
+    {"input": "Computer Networks",          "expected_valid": true,  "note": "networking"},
+    {"input": "Sorting Algorithms",         "expected_valid": true,  "note": "algorithms"},
+    {"input": "SQL and Databases",          "expected_valid": true,  "note": "databases"},
+    {"input": "Cryptography",               "expected_valid": true,  "note": "security/theory"},
+    {"input": "React",                      "expected_valid": true,  "note": "web framework"},
+    {"input": "Compilers",                  "expected_valid": true,  "note": "CS theory/systems"},
+    {"input": "Concurrency and Threads",    "expected_valid": true,  "note": "systems programming"},
+
+    {"input": "sewing stuffed animals",     "expected_valid": false, "note": "craft, not CS"},
+    {"input": "French cooking",             "expected_valid": false, "note": "culinary, not CS"},
+    {"input": "basketball strategy",        "expected_valid": false, "note": "sports, not CS"},
+    {"input": "asdfghjkl",                  "expected_valid": false, "note": "gibberish"},
+    {"input": "history of ancient Rome",    "expected_valid": false, "note": "history, not CS"},
+    {"input": "how to make friends",        "expected_valid": false, "note": "social, not CS"},
+    {"input": "stock market investing",     "expected_valid": false, "note": "finance, not CS"},
+    {"input": "yoga and meditation",        "expected_valid": false, "note": "wellness, not CS"},
+    {"input": "car engine repair",          "expected_valid": false, "note": "mechanical, not CS"},
+    {"input": "12345",                      "expected_valid": false, "note": "numeric gibberish"},
+
+    {"input": "a star pathfinding",         "expected_valid": true,  "note": "CS algorithm, informal name for A*"},
+    {"input": "making a game",              "expected_valid": true,  "note": "game development — CS if interpreted as software"},
+    {"input": "dijkstra",                   "expected_valid": true,  "note": "well-known graph algorithm, single-word input"},
+    {"input": "big o notation",             "expected_valid": true,  "note": "CS fundamentals, informal phrasing"},
+    {"input": "how to build a website",     "expected_valid": true,  "note": "imperative phrasing but clearly web dev"},
+    {"input": "learn python",               "expected_valid": true,  "note": "imperative phrasing, programming language"},
+    {"input": "trees",                      "expected_valid": true,  "note": "ambiguous — should resolve to CS data structures in context"},
+    {"input": "networking",                 "expected_valid": true,  "note": "ambiguous — computer networking is CS"},
+    {"input": "pointers",                   "expected_valid": true,  "note": "CS memory concept, single word"},
+    {"input": "recursion",                  "expected_valid": true,  "note": "core CS concept, single word"},
+
+    {"input": "game theory",                "expected_valid": false, "note": "math/economics discipline, NOT game development"},
+    {"input": "architecture",               "expected_valid": false, "note": "ambiguous — without 'software' prefix should be rejected"},
+    {"input": "making friends online",      "expected_valid": false, "note": "social, not CS despite 'online'"},
+    {"input": "networking at conferences",  "expected_valid": false, "note": "professional networking, not computer networking"},
+    {"input": "the cloud",                  "expected_valid": true,  "note": "cloud computing — CS domain"},
+    {"input": "data",                       "expected_valid": false, "note": "too vague on its own to build a CS course around"},
+    {"input": "math",                       "expected_valid": false, "note": "too broad — not a CS topic on its own"},
+    {"input": "logic",                      "expected_valid": false, "note": "ambiguous — could be philosophy; too vague without 'digital logic' or 'boolean logic'"},
+    {"input": "building a compiler",        "expected_valid": true,  "note": "imperative phrasing, clearly CS"},
+    {"input": "how computers work",         "expected_valid": true,  "note": "broad but valid CS survey topic"}
+  ],
+  "feedback_cases": [
+    {
+      "file": "eval/samples/sample_beginner.py",
+      "proficiency": "Beginner",
+      "project_description": "Implement a singly linked list with append, delete, and length operations.",
+      "learner_note": "I'm not sure if my delete method handles all cases correctly.",
+      "note": "Beginner linked list — style issues and missing edge cases",
+
+      "expected_issues": [
+        {
+          "id": "none_comparison",
+          "description": "Using == None instead of is None",
+          "required_keywords": ["is none", "== none", "identity", "comparison"],
+          "must_be_improvement": true
+        },
+        {
+          "id": "no_docstrings",
+          "description": "No docstrings or comments on methods",
+          "required_keywords": ["docstring", "comment", "documentation"],
+          "must_be_improvement": true
+        },
+        {
+          "id": "increment_style",
+          "description": "count = count + 1 should be count += 1",
+          "required_keywords": ["+=", "increment", "count +"],
+          "must_be_improvement": false
+        }
+      ],
+
+      "forbidden_praise": [
+        "perfect", "flawless", "no issues", "excellent edge case"
+      ],
+
+      "score_bounds": {
+        "correctness":  {"min": 5, "max": 8},
+        "readability":  {"min": 4, "max": 8},
+        "efficiency":   {"min": 5, "max": 9}
+      },
+
+      "min_improvements": 2,
+      "min_code_examples": 1,
+      "min_example_length": 20,
+      "requires_technical_language": false
+    },
+    {
+      "file": "eval/samples/sample_intermediate.py",
+      "proficiency": "Intermediate",
+      "project_description": "Implement a Binary Search Tree with insert, search, inorder traversal, and delete.",
+      "learner_note": "My delete only works for leaf nodes, I couldn't figure out the other cases.",
+      "note": "Intermediate BST — incomplete delete, inconsistent return types",
+
+      "expected_issues": [
+        {
+          "id": "incomplete_delete",
+          "description": "Delete only handles leaf nodes, not nodes with one or two children",
+          "required_keywords": ["leaf", "child", "children", "delete", "successor", "predecessor"],
+          "must_be_improvement": true
+        },
+        {
+          "id": "inconsistent_return",
+          "description": "search() returns None implicitly instead of False when not found",
+          "required_keywords": ["none", "false", "return", "consistent", "search"],
+          "must_be_improvement": true
+        }
+      ],
+
+      "forbidden_praise": [
+        "complete delete", "handles all cases", "fully implemented delete"
+      ],
+
+      "score_bounds": {
+        "correctness":  {"min": 4, "max": 8},
+        "readability":  {"min": 5, "max": 9},
+        "efficiency":   {"min": 5, "max": 9}
+      },
+
+      "min_improvements": 2,
+      "min_code_examples": 1,
+      "min_example_length": 30,
+      "requires_technical_language": true
+    },
+    {
+      "file": "eval/samples/sample_advanced.py",
+      "proficiency": "Advanced",
+      "project_description": "Implement a weighted graph with Dijkstra's shortest path algorithm and BFS traversal.",
+      "learner_note": "I think my Dijkstra might be slow on dense graphs but I'm not sure why.",
+      "note": "Advanced graph — stale heap entries bug, missing visited guard",
+
+      "expected_issues": [
+        {
+          "id": "stale_heap_entries",
+          "description": "Missing guard 'if d > dist[u]: continue' causes stale heap entries to be processed",
+          "required_keywords": ["stale", "heap", "guard", "continue", "visited", "processed", "skip"],
+          "must_be_improvement": true
+        },
+        {
+          "id": "no_negative_weight_check",
+          "description": "No validation that edge weights are non-negative before running Dijkstra",
+          "required_keywords": ["negative", "weight", "validation", "dijkstra"],
+          "must_be_improvement": false
+        }
+      ],
+
+      "forbidden_praise": [
+        "correctly handles all edge cases", "no issues with the heap", "optimal implementation"
+      ],
+
+      "score_bounds": {
+        "correctness":  {"min": 4, "max": 8},
+        "readability":  {"min": 5, "max": 9},
+        "efficiency":   {"min": 3, "max": 8}
+      },
+
+      "min_improvements": 2,
+      "min_code_examples": 1,
+      "min_example_length": 30,
+      "requires_technical_language": true
+    }
+  ]
+}

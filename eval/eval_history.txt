@@ -1,0 +1,1476 @@
+This is the result of running the eval on the baseline.
+{
+  "timestamp": "2026-05-14T01:03:14",
+  "validation": {
+    "accuracy": 87.5,
+    "fpr": 29.411764705882355,
+    "fnr": 0.0,
+    "total": 40,
+    "correct": 35,
+    "details": [
+      {
+        "input": "Binary Search Trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS data structure"
+      },
+      {
+        "input": "Machine Learning",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "AI/ML domain"
+      },
+      {
+        "input": "Operating Systems",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems CS"
+      },
+      {
+        "input": "Computer Networks",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "networking"
+      },
+      {
+        "input": "Sorting Algorithms",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "algorithms"
+      },
+      {
+        "input": "SQL and Databases",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "databases"
+      },
+      {
+        "input": "Cryptography",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "security/theory"
+      },
+      {
+        "input": "React",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "web framework"
+      },
+      {
+        "input": "Compilers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS theory/systems"
+      },
+      {
+        "input": "Concurrency and Threads",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems programming"
+      },
+      {
+        "input": "sewing stuffed animals",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "craft, not CS"
+      },
+      {
+        "input": "French cooking",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "culinary, not CS"
+      },
+      {
+        "input": "basketball strategy",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "sports, not CS"
+      },
+      {
+        "input": "asdfghjkl",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "gibberish"
+      },
+      {
+        "input": "history of ancient Rome",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "history, not CS"
+      },
+      {
+        "input": "how to make friends",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS"
+      },
+      {
+        "input": "stock market investing",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "finance, not CS"
+      },
+      {
+        "input": "yoga and meditation",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "wellness, not CS"
+      },
+      {
+        "input": "car engine repair",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "mechanical, not CS"
+      },
+      {
+        "input": "12345",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "numeric gibberish"
+      },
+      {
+        "input": "a star pathfinding",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS algorithm, informal name for A*"
+      },
+      {
+        "input": "making a game",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "game development \u00e2\u20ac\u201d CS if interpreted as software"
+      },
+      {
+        "input": "dijkstra",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "well-known graph algorithm, single-word input"
+      },
+      {
+        "input": "big o notation",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS fundamentals, informal phrasing"
+      },
+      {
+        "input": "how to build a website",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing but clearly web dev"
+      },
+      {
+        "input": "learn python",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, programming language"
+      },
+      {
+        "input": "trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d should resolve to CS data structures in context"
+      },
+      {
+        "input": "networking",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d computer networking is CS"
+      },
+      {
+        "input": "pointers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS memory concept, single word"
+      },
+      {
+        "input": "recursion",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS concept, single word"
+      },
+      {
+        "input": "game theory",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "math/economics discipline, NOT game development"
+      },
+      {
+        "input": "architecture",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "ambiguous \u00e2\u20ac\u201d without 'software' prefix should be rejected"
+      },
+      {
+        "input": "making friends online",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS despite 'online'"
+      },
+      {
+        "input": "networking at conferences",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "professional networking, not computer networking"
+      },
+      {
+        "input": "the cloud",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "cloud computing \u00e2\u20ac\u201d CS domain"
+      },
+      {
+        "input": "data",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "too vague on its own to build a CS course around"
+      },
+      {
+        "input": "math",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "too broad \u00e2\u20ac\u201d not a CS topic on its own"
+      },
+      {
+        "input": "logic",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "ambiguous \u00e2\u20ac\u201d could be philosophy; too vague without 'digital logic' or 'boolean logic'"
+      },
+      {
+        "input": "building a compiler",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, clearly CS"
+      },
+      {
+        "input": "how computers work",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "broad but valid CS survey topic"
+      }
+    ]
+  },
+  "feedback": {
+    "cases": [
+      {
+        "file": "eval/samples/sample_beginner.py",
+        "proficiency": "Beginner",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 1,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 2,
+          "next_steps_count": 1
+        },
+        "pct": 96.55172413793103,
+        "failure_notes": [
+          "overall too short or only 1 sentence (163 chars, 1 sentences)"
+        ]
+      },
+      {
+        "file": "eval/samples/sample_intermediate.py",
+        "proficiency": "Intermediate",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 1,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 0,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 1,
+          "next_steps_count": 1
+        },
+        "pct": 86.20689655172413,
+        "failure_notes": [
+          "overall too short or only 1 sentence (153 chars, 1 sentences)",
+          "Forbidden praise found: ['complete delete', 'handles all cases']",
+          "Only 1 technical term(s) found: ['traversal']"
+        ]
+      },
+      {
+        "file": "eval/samples/sample_advanced.py",
+        "proficiency": "Advanced",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 1,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 1,
+          "next_steps_count": 1
+        },
+        "pct": 93.10344827586206,
+        "failure_notes": [
+          "overall too short or only 1 sentence (222 chars, 1 sentences)",
+          "Only 1 technical term(s) found: ['algorithm']"
+        ]
+      }
+    ],
+    "average": 91.95402298850574
+  }
+}
+
+v1 eval
+{
+  "timestamp": "2026-05-14T01:50:13",
+  "validation": {
+    "accuracy": 90.0,
+    "fpr": 23.52941176470588,
+    "fnr": 0.0,
+    "total": 40,
+    "correct": 36,
+    "details": [
+      {
+        "input": "Binary Search Trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS data structure"
+      },
+      {
+        "input": "Machine Learning",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "AI/ML domain"
+      },
+      {
+        "input": "Operating Systems",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems CS"
+      },
+      {
+        "input": "Computer Networks",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "networking"
+      },
+      {
+        "input": "Sorting Algorithms",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "algorithms"
+      },
+      {
+        "input": "SQL and Databases",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "databases"
+      },
+      {
+        "input": "Cryptography",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "security/theory"
+      },
+      {
+        "input": "React",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "web framework"
+      },
+      {
+        "input": "Compilers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS theory/systems"
+      },
+      {
+        "input": "Concurrency and Threads",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems programming"
+      },
+      {
+        "input": "sewing stuffed animals",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "craft, not CS"
+      },
+      {
+        "input": "French cooking",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "culinary, not CS"
+      },
+      {
+        "input": "basketball strategy",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "sports, not CS"
+      },
+      {
+        "input": "asdfghjkl",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "gibberish"
+      },
+      {
+        "input": "history of ancient Rome",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "history, not CS"
+      },
+      {
+        "input": "how to make friends",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS"
+      },
+      {
+        "input": "stock market investing",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "finance, not CS"
+      },
+      {
+        "input": "yoga and meditation",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "wellness, not CS"
+      },
+      {
+        "input": "car engine repair",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "mechanical, not CS"
+      },
+      {
+        "input": "12345",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "numeric gibberish"
+      },
+      {
+        "input": "a star pathfinding",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS algorithm, informal name for A*"
+      },
+      {
+        "input": "making a game",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "game development \u00e2\u20ac\u201d CS if interpreted as software"
+      },
+      {
+        "input": "dijkstra",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "well-known graph algorithm, single-word input"
+      },
+      {
+        "input": "big o notation",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS fundamentals, informal phrasing"
+      },
+      {
+        "input": "how to build a website",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing but clearly web dev"
+      },
+      {
+        "input": "learn python",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, programming language"
+      },
+      {
+        "input": "trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d should resolve to CS data structures in context"
+      },
+      {
+        "input": "networking",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d computer networking is CS"
+      },
+      {
+        "input": "pointers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS memory concept, single word"
+      },
+      {
+        "input": "recursion",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS concept, single word"
+      },
+      {
+        "input": "game theory",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "math/economics discipline, NOT game development"
+      },
+      {
+        "input": "architecture",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "ambiguous \u00e2\u20ac\u201d without 'software' prefix should be rejected"
+      },
+      {
+        "input": "making friends online",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS despite 'online'"
+      },
+      {
+        "input": "networking at conferences",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "professional networking, not computer networking"
+      },
+      {
+        "input": "the cloud",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "cloud computing \u00e2\u20ac\u201d CS domain"
+      },
+      {
+        "input": "data",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "too vague on its own to build a CS course around"
+      },
+      {
+        "input": "math",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "too broad \u00e2\u20ac\u201d not a CS topic on its own"
+      },
+      {
+        "input": "logic",
+        "expected": false,
+        "got": true,
+        "correct": false,
+        "note": "ambiguous \u00e2\u20ac\u201d could be philosophy; too vague without 'digital logic' or 'boolean logic'"
+      },
+      {
+        "input": "building a compiler",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, clearly CS"
+      },
+      {
+        "input": "how computers work",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "broad but valid CS survey topic"
+      }
+    ]
+  },
+  "feedback": {
+    "cases": [
+      {
+        "file": "eval/samples/sample_beginner.py",
+        "proficiency": "Beginner",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 2,
+          "next_steps_count": 1
+        },
+        "pct": 100.0,
+        "failure_notes": []
+      },
+      {
+        "file": "eval/samples/sample_intermediate.py",
+        "proficiency": "Intermediate",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 1,
+          "next_steps_count": 1
+        },
+        "pct": 96.55172413793103,
+        "failure_notes": [
+          "Only 1 technical term(s) found: ['traversal']"
+        ]
+      },
+      {
+        "file": "eval/samples/sample_advanced.py",
+        "proficiency": "Advanced",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 1,
+          "next_steps_count": 1
+        },
+        "pct": 96.55172413793103,
+        "failure_notes": [
+          "Only 1 technical term(s) found: ['algorithm']"
+        ]
+      }
+    ],
+    "average": 97.70114942528737
+  }
+}
+
+v2 eval
+{
+  "timestamp": "2026-05-14T01:59:58",
+  "validation": {
+    "accuracy": 100.0,
+    "fpr": 0.0,
+    "fnr": 0.0,
+    "total": 40,
+    "correct": 40,
+    "details": [
+      {
+        "input": "Binary Search Trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS data structure"
+      },
+      {
+        "input": "Machine Learning",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "AI/ML domain"
+      },
+      {
+        "input": "Operating Systems",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems CS"
+      },
+      {
+        "input": "Computer Networks",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "networking"
+      },
+      {
+        "input": "Sorting Algorithms",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "algorithms"
+      },
+      {
+        "input": "SQL and Databases",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "databases"
+      },
+      {
+        "input": "Cryptography",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "security/theory"
+      },
+      {
+        "input": "React",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "web framework"
+      },
+      {
+        "input": "Compilers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS theory/systems"
+      },
+      {
+        "input": "Concurrency and Threads",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems programming"
+      },
+      {
+        "input": "sewing stuffed animals",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "craft, not CS"
+      },
+      {
+        "input": "French cooking",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "culinary, not CS"
+      },
+      {
+        "input": "basketball strategy",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "sports, not CS"
+      },
+      {
+        "input": "asdfghjkl",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "gibberish"
+      },
+      {
+        "input": "history of ancient Rome",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "history, not CS"
+      },
+      {
+        "input": "how to make friends",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS"
+      },
+      {
+        "input": "stock market investing",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "finance, not CS"
+      },
+      {
+        "input": "yoga and meditation",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "wellness, not CS"
+      },
+      {
+        "input": "car engine repair",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "mechanical, not CS"
+      },
+      {
+        "input": "12345",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "numeric gibberish"
+      },
+      {
+        "input": "a star pathfinding",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS algorithm, informal name for A*"
+      },
+      {
+        "input": "making a game",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "game development \u00e2\u20ac\u201d CS if interpreted as software"
+      },
+      {
+        "input": "dijkstra",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "well-known graph algorithm, single-word input"
+      },
+      {
+        "input": "big o notation",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS fundamentals, informal phrasing"
+      },
+      {
+        "input": "how to build a website",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing but clearly web dev"
+      },
+      {
+        "input": "learn python",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, programming language"
+      },
+      {
+        "input": "trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d should resolve to CS data structures in context"
+      },
+      {
+        "input": "networking",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d computer networking is CS"
+      },
+      {
+        "input": "pointers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS memory concept, single word"
+      },
+      {
+        "input": "recursion",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS concept, single word"
+      },
+      {
+        "input": "game theory",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "math/economics discipline, NOT game development"
+      },
+      {
+        "input": "architecture",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d without 'software' prefix should be rejected"
+      },
+      {
+        "input": "making friends online",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS despite 'online'"
+      },
+      {
+        "input": "networking at conferences",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "professional networking, not computer networking"
+      },
+      {
+        "input": "the cloud",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "cloud computing \u00e2\u20ac\u201d CS domain"
+      },
+      {
+        "input": "data",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "too vague on its own to build a CS course around"
+      },
+      {
+        "input": "math",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "too broad \u00e2\u20ac\u201d not a CS topic on its own"
+      },
+      {
+        "input": "logic",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d could be philosophy; too vague without 'digital logic' or 'boolean logic'"
+      },
+      {
+        "input": "building a compiler",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, clearly CS"
+      },
+      {
+        "input": "how computers work",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "broad but valid CS survey topic"
+      }
+    ]
+  },
+  "feedback": {
+    "cases": [
+      {
+        "file": "eval/samples/sample_beginner.py",
+        "proficiency": "Beginner",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 2,
+          "issue_keyword_coverage": 1,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 2,
+          "next_steps_count": 1
+        },
+        "pct": 86.20689655172413,
+        "failure_notes": [
+          "Critical issue 'no_docstrings' not found in improvements[] (keywords: ['docstring', 'comment', 'documentation'])",
+          "Issue 'no_docstrings' keywords not found in improvements: ['docstring', 'comment', 'documentation']",
+          "Issue 'increment_style' keywords not found in improvements: ['+=', 'increment', 'count +']"
+        ]
+      },
+      {
+        "file": "eval/samples/sample_intermediate.py",
+        "proficiency": "Intermediate",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 0,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 1,
+          "next_steps_count": 1
+        },
+        "pct": 89.65517241379311,
+        "failure_notes": [
+          "Forbidden praise found: ['complete delete']",
+          "Only 1 technical term(s) found: ['traversal']"
+        ]
+      },
+      {
+        "file": "eval/samples/sample_advanced.py",
+        "proficiency": "Advanced",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 2,
+          "next_steps_count": 1
+        },
+        "pct": 100.0,
+        "failure_notes": []
+      }
+    ],
+    "average": 91.95402298850574
+  }
+}
+
+v3 eval
+{
+  "timestamp": "2026-05-14T02:32:04",
+  "validation": {
+    "accuracy": 100.0,
+    "fpr": 0.0,
+    "fnr": 0.0,
+    "total": 40,
+    "correct": 40,
+    "details": [
+      {
+        "input": "Binary Search Trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS data structure"
+      },
+      {
+        "input": "Machine Learning",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "AI/ML domain"
+      },
+      {
+        "input": "Operating Systems",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems CS"
+      },
+      {
+        "input": "Computer Networks",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "networking"
+      },
+      {
+        "input": "Sorting Algorithms",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "algorithms"
+      },
+      {
+        "input": "SQL and Databases",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "databases"
+      },
+      {
+        "input": "Cryptography",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "security/theory"
+      },
+      {
+        "input": "React",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "web framework"
+      },
+      {
+        "input": "Compilers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS theory/systems"
+      },
+      {
+        "input": "Concurrency and Threads",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "systems programming"
+      },
+      {
+        "input": "sewing stuffed animals",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "craft, not CS"
+      },
+      {
+        "input": "French cooking",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "culinary, not CS"
+      },
+      {
+        "input": "basketball strategy",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "sports, not CS"
+      },
+      {
+        "input": "asdfghjkl",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "gibberish"
+      },
+      {
+        "input": "history of ancient Rome",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "history, not CS"
+      },
+      {
+        "input": "how to make friends",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS"
+      },
+      {
+        "input": "stock market investing",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "finance, not CS"
+      },
+      {
+        "input": "yoga and meditation",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "wellness, not CS"
+      },
+      {
+        "input": "car engine repair",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "mechanical, not CS"
+      },
+      {
+        "input": "12345",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "numeric gibberish"
+      },
+      {
+        "input": "a star pathfinding",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS algorithm, informal name for A*"
+      },
+      {
+        "input": "making a game",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "game development \u00e2\u20ac\u201d CS if interpreted as software"
+      },
+      {
+        "input": "dijkstra",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "well-known graph algorithm, single-word input"
+      },
+      {
+        "input": "big o notation",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS fundamentals, informal phrasing"
+      },
+      {
+        "input": "how to build a website",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing but clearly web dev"
+      },
+      {
+        "input": "learn python",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, programming language"
+      },
+      {
+        "input": "trees",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d should resolve to CS data structures in context"
+      },
+      {
+        "input": "networking",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d computer networking is CS"
+      },
+      {
+        "input": "pointers",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "CS memory concept, single word"
+      },
+      {
+        "input": "recursion",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "core CS concept, single word"
+      },
+      {
+        "input": "game theory",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "math/economics discipline, NOT game development"
+      },
+      {
+        "input": "architecture",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d without 'software' prefix should be rejected"
+      },
+      {
+        "input": "making friends online",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "social, not CS despite 'online'"
+      },
+      {
+        "input": "networking at conferences",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "professional networking, not computer networking"
+      },
+      {
+        "input": "the cloud",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "cloud computing \u00e2\u20ac\u201d CS domain"
+      },
+      {
+        "input": "data",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "too vague on its own to build a CS course around"
+      },
+      {
+        "input": "math",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "too broad \u00e2\u20ac\u201d not a CS topic on its own"
+      },
+      {
+        "input": "logic",
+        "expected": false,
+        "got": false,
+        "correct": true,
+        "note": "ambiguous \u00e2\u20ac\u201d could be philosophy; too vague without 'digital logic' or 'boolean logic'"
+      },
+      {
+        "input": "building a compiler",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "imperative phrasing, clearly CS"
+      },
+      {
+        "input": "how computers work",
+        "expected": true,
+        "got": true,
+        "correct": true,
+        "note": "broad but valid CS survey topic"
+      }
+    ]
+  },
+  "feedback": {
+    "cases": [
+      {
+        "file": "eval/samples/sample_beginner.py",
+        "proficiency": "Beginner",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 2,
+          "issue_keyword_coverage": 1,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 2,
+          "next_steps_count": 1
+        },
+        "pct": 86.20689655172413,
+        "failure_notes": [
+          "Critical issue 'none_comparison' not found in improvements[] (keywords: ['is none', '== none', 'identity', 'comparison'])",
+          "Issue 'none_comparison' keywords not found in improvements: ['is none', '== none', 'identity', 'comparison']",
+          "Issue 'increment_style' keywords not found in improvements: ['+=', 'increment', 'count +']"
+        ]
+      },
+      {
+        "file": "eval/samples/sample_intermediate.py",
+        "proficiency": "Intermediate",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 0,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 1,
+          "next_steps_count": 1
+        },
+        "pct": 89.65517241379311,
+        "failure_notes": [
+          "Forbidden praise found: ['complete delete']",
+          "Only 1 technical term(s) found: ['traversal']"
+        ]
+      },
+      {
+        "file": "eval/samples/sample_advanced.py",
+        "proficiency": "Advanced",
+        "scores": {
+          "all_fields": 2,
+          "overall_length": 2,
+          "overall_specific": 2,
+          "critical_issues_in_improvements": 4,
+          "issue_keyword_coverage": 3,
+          "no_forbidden_praise": 2,
+          "improvement_count": 2,
+          "code_example_quality": 3,
+          "suggestions_specific": 2,
+          "score_in_bounds": 3,
+          "scores_differentiated": 1,
+          "technical_language": 1,
+          "next_steps_count": 1
+        },
+        "pct": 96.55172413793103,
+        "failure_notes": [
+          "Only 2 technical term(s) found: ['algorithm', 'traversal']"
+        ]
+      }
+    ],
+    "average": 90.80459770114942
+  }
+}

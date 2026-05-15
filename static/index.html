@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skill Tree</title>
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #0d1117; color: #e2e8f0; min-height: 100vh; }
+
+    /* ---- screens ---- */
+    .screen {
+      display: none;
+    }
+
+    /* Active screen fills the viewport from the top */
+    .screen.active {
+      display: block;
+      animation: fadeIn 0.22s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    #screen-setup.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      gap: 1.5rem;
+    }
+
+    h1 { font-size: 2rem; }
+    .accent { color: #a78bfa; }
+
+    .card {
+      background: #161b27;
+      border: 1px solid #2a3347;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.06em; color: #8892a4; display: block; margin-bottom: 0.4rem; }
+
+    input[type="text"] {
+      width: 100%; padding: 0.75rem 1rem;
+      background: #1e2535; border: 1.5px solid #2a3347; border-radius: 8px;
+      color: #e2e8f0; font-size: 1rem; outline: none;
+    }
+    input[type="text"]:focus { border-color: #6c63ff; }
+
+    .radio-group { display: flex; gap: 0.5rem; }
+    .radio-group label {
+      flex: 1; background: #1e2535; border: 1.5px solid #2a3347; border-radius: 8px;
+      padding: 0.65rem 0.5rem; text-align: center; cursor: pointer;
+      font-size: 0.85rem; font-weight: 600; color: #8892a4;
+      text-transform: none; letter-spacing: 0; margin: 0;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .radio-group input[type="radio"] { display: none; }
+    .radio-group input[type="radio"]:checked + label {
+      border-color: #6c63ff; color: #e2e8f0; background: rgba(108,99,255,0.12);
+    }
+
+    .status-msg {
+      border-radius: 8px; font-size: 0.88rem; padding: 0.6rem 0.9rem;
+      display: none;
+    }
+    .status-msg.error   { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #f87171; }
+    .status-msg.info    { background: rgba(108,99,255,0.1);  border: 1px solid rgba(108,99,255,0.3);  color: #a78bfa; }
+
+    /* ---- generation progress bar (setup screen) ---- */
+    .gen-progress-wrap {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .gen-progress-wrap.visible { display: flex; }
+
+    .gen-progress-track {
+      background: #1e2535;
+      border-radius: 999px;
+      height: 6px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .gen-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #6c63ff;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+    .gen-progress-label {
+      font-size: 0.78rem;
+      color: #8892a4;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 0.85rem; background: #6c63ff; border: none; border-radius: 8px;
+      color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%;
+    }
+    .btn:hover { background: #5a52e0; }
+    .btn:disabled { background: #2a3347; color: #8892a4; cursor: not-allowed; }
+
+    /* ---- course screen ---- */
+    #screen-course { padding: 2rem; }
+    #screen-lesson  { padding: 2rem; }
+
+    .top-bar {
+      display: flex; align-items: center; gap: 1rem;
+      padding-bottom: 1.5rem; border-bottom: 1px solid #2a3347; margin-bottom: 1.5rem;
+    }
+    .btn-back {
+      background: none; border: 1px solid #2a3347; border-radius: 8px;
+      color: #8892a4; cursor: pointer; font-size: 0.88rem; padding: 0.5rem 1rem;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-back:hover { color: #e2e8f0; border-color: #6c63ff; }
+
+    #course-title { font-size: 1.4rem; font-weight: 700; }
+    #course-desc   { color: #8892a4; margin-top: 0.25rem; font-size: 0.9rem; }
+
+    /* ---- module list ---- */
+    .module-list { display: flex; flex-direction: column; gap: 0.75rem; max-width: 700px; }
+
+    .module-card {
+      background: #161b27; border: 1px solid #2a3347; border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* clickable header row */
+    .module-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem; cursor: pointer; user-select: none;
+      gap: 0.75rem;
+    }
+    .module-header:hover { background: rgba(255,255,255,0.02); }
+
+    .module-header-left { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; min-width: 0; }
+    .module-header h3   { font-size: 1rem; margin: 0; }
+    .module-header p    { color: #8892a4; font-size: 0.85rem; margin: 0; }
+
+    .chevron {
+      color: #8892a4; font-size: 0.75rem; flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .module-card.open .chevron { transform: rotate(90deg); }
+
+    /* collapsible lesson list */
+    .lesson-list {
+      display: none;
+      border-top: 1px solid #2a3347;
+    }
+    .module-card.open .lesson-list { display: block; }
+
+    .lesson-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.75rem 1.25rem; cursor: pointer; gap: 0.75rem;
+      border-bottom: 1px solid #1e2535;
+      transition: background 0.15s;
+    }
+    .lesson-row:last-child { border-bottom: none; }
+    .lesson-row:hover { background: rgba(108,99,255,0.08); }
+
+    .lesson-row-title    { font-size: 0.9rem; font-weight: 600; }
+    .lesson-row-objective{ font-size: 0.78rem; color: #8892a4; margin-top: 0.15rem; }
+    .lesson-row-arrow    { color: #8892a4; font-size: 0.85rem; flex-shrink: 0; }
+
+    /* project card — expandable, same pattern as lesson card */
+    .project-card {
+      background: #1a1a0f; border-color: rgba(251,191,36,0.3);
+    }
+    .project-card .module-header:hover { background: rgba(251,191,36,0.03); }
+    .project-card h3 { color: #fbbf24; }
+    .project-card .lesson-list { border-top-color: rgba(251,191,36,0.2); }
+
+    /* the single "Open Project" row inside an expanded project card */
+    .project-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.75rem 1.25rem; cursor: pointer; gap: 0.75rem;
+      transition: background 0.15s;
+    }
+    .project-row:hover { background: rgba(251,191,36,0.08); }
+    .project-row-title { font-size: 0.9rem; font-weight: 600; color: #fbbf24; }
+    .project-row-desc  { font-size: 0.78rem; color: #8892a4; margin-top: 0.15rem; }
+    .project-row-arrow { color: #fbbf24; font-size: 0.85rem; flex-shrink: 0; }
+
+    .module-type-badge {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; border-radius: 4px;
+      padding: 0.2rem 0.55rem; margin-bottom: 0.4rem;
+    }
+    .lesson-badge  { background: rgba(108,99,255,0.15); color: #a78bfa; }
+    .project-badge { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+    /* ---- lesson screen ---- */
+    .lesson-body { max-width: 700px; }
+    .lesson-body h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .lesson-objective-box {
+      background: rgba(108,99,255,0.1); border-left: 3px solid #6c63ff;
+      border-radius: 0 8px 8px 0; color: #a78bfa;
+      font-size: 0.88rem; padding: 0.65rem 1rem; margin-bottom: 1.75rem;
+    }
+    .lesson-section { margin-bottom: 1.75rem; }
+    .section-heading {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #8892a4; margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-heading::after { content:''; flex:1; height:1px; background:#2a3347; }
+
+    .explanation { line-height: 1.8; }
+    .explanation p  { margin-bottom: 0.75rem; }
+    .explanation h2 { font-size: 1.05rem; font-weight: 700; color: #a78bfa; margin: 1.25rem 0 0.4rem; }
+    .explanation h3 { font-size: 0.95rem; font-weight: 700; margin: 1rem 0 0.35rem; }
+    .explanation ul, .explanation ol { padding-left: 1.4rem; margin-bottom: 0.75rem; }
+    .explanation li { margin-bottom: 0.3rem; }
+    .explanation strong { color: #e2e8f0; }
+    .explanation code {
+      background: #1e2535; border: 1px solid #2a3347; border-radius: 4px;
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      font-size: 0.85em; padding: 0.1em 0.4em;
+    }
+
+    .code-block {
+      background: #1e2535; border: 1px solid #2a3347; border-radius: 8px;
+      overflow: hidden; margin-bottom: 1rem;
+    }
+    .code-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.4rem 1rem; border-bottom: 1px solid #2a3347;
+      background: rgba(0,0,0,0.2);
+    }
+    .code-lang { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+                 letter-spacing: 0.05em; color: #a78bfa; }
+    .copy-btn {
+      background: none; border: 1px solid #2a3347; border-radius: 4px;
+      color: #8892a4; cursor: pointer; font-size: 0.72rem; padding: 0.15rem 0.55rem;
+    }
+    .copy-btn:hover { border-color: #6c63ff; color: #e2e8f0; }
+    .code-block pre {
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      font-size: 0.85rem; line-height: 1.7; margin: 0;
+      overflow-x: auto; padding: 1rem;
+      white-space: pre;
+    }
+    .code-desc { color: #8892a4; font-size: 0.85rem; margin-bottom: 0.4rem; }
+
+    .concepts { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .concept-tag {
+      background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 999px; color: #a78bfa; font-size: 0.8rem;
+      font-weight: 600; padding: 0.25rem 0.8rem;
+    }
+
+    .exercise-box {
+      background: #1e2535; border: 1px solid #2a3347; border-radius: 10px; padding: 1.25rem;
+    }
+    .exercise-prompt { margin-bottom: 1rem; line-height: 1.7; }
+    .hints-btn {
+      background: none; border: 1px solid #2a3347; border-radius: 6px;
+      color: #8892a4; cursor: pointer; font-size: 0.82rem; padding: 0.35rem 0.85rem;
+      margin-bottom: 0.65rem;
+    }
+    .hints-btn:hover { border-color: #fbbf24; color: #fbbf24; }
+    .hints-list { display: none; padding-left: 1.25rem; margin-bottom: 0.65rem; }
+    .hints-list.open { display: block; }
+    .hints-list li { color: #8892a4; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .solution-note {
+      background: rgba(52,211,153,0.08); border-left: 3px solid #34d399;
+      border-radius: 0 6px 6px 0; color: #34d399;
+      font-size: 0.83rem; margin-top: 0.65rem; padding: 0.55rem 0.9rem;
+    }
+
+    /* loading spinner */
+    .spinner-wrap { display: flex; align-items: center; gap: 0.75rem; color: #8892a4; padding: 2rem 0; }
+    .spinner {
+      width: 22px; height: 22px; border: 2px solid #2a3347;
+      border-top-color: #6c63ff; border-radius: 50%;
+      animation: spin 0.7s linear infinite; flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---- project screen ---- */
+    #screen-project { padding: 2rem; }
+    .project-body   { max-width: 700px; }
+
+    .project-hero {
+      background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .project-hero-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #fbbf24; margin-bottom: 0.5rem;
+    }
+    .project-hero h2 { font-size: 1.4rem; font-weight: 700; color: #fbbf24; margin-bottom: 0.5rem; }
+    .project-hero p  { color: #8892a4; line-height: 1.7; }
+
+    .feedback-panel {
+      background: #161b27; border: 1px solid #2a3347; border-radius: 10px; padding: 1.5rem;
+    }
+    .feedback-panel h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; }
+
+    .file-drop {
+      background: #1e2535; border: 2px dashed #2a3347; border-radius: 8px;
+      cursor: pointer; padding: 2rem 1rem; text-align: center;
+      transition: border-color 0.2s, background 0.2s; margin-bottom: 1rem;
+    }
+    .file-drop:hover, .file-drop.dragover {
+      border-color: #6c63ff; background: rgba(108,99,255,0.06);
+    }
+    .file-drop-icon { font-size: 1.8rem; margin-bottom: 0.35rem; }
+    .file-drop p    { color: #8892a4; font-size: 0.88rem; }
+    .file-hint      { font-size: 0.75rem; margin-top: 0.3rem; }
+    .file-selected  { color: #34d399; font-weight: 600; }
+
+    .feedback-notes-label {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #8892a4; display: block; margin-bottom: 0.4rem;
+    }
+    textarea {
+      width: 100%; background: #1e2535; border: 1.5px solid #2a3347; border-radius: 8px;
+      color: #e2e8f0; font-family: inherit; font-size: 0.9rem;
+      padding: 0.7rem 1rem; outline: none; resize: vertical;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: #6c63ff; }
+    textarea::placeholder { color: #8892a4; }
+
+    .feedback-submit {
+      margin-top: 1rem; padding: 0.75rem 1.5rem;
+      background: #6c63ff; border: none; border-radius: 8px;
+      color: #fff; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .feedback-submit:hover { background: #5a52e0; }
+    .feedback-submit:disabled { background: #2a3347; color: #8892a4; cursor: not-allowed; }
+
+    /* feedback results */
+    .feedback-result { margin-top: 1.5rem; }
+    .fb-section { margin-bottom: 1.25rem; }
+    .fb-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #8892a4; margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .fb-label::after { content:''; flex:1; height:1px; background:#2a3347; }
+    .fb-overall {
+      background: #1e2535; border: 1px solid #2a3347; border-radius: 8px;
+      padding: 1rem; line-height: 1.7;
+    }
+    .score-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 0.6rem; margin-bottom: 0.6rem;
+    }
+    .score-item {
+      background: #1e2535; border: 1px solid #2a3347; border-radius: 8px;
+      padding: 0.85rem; text-align: center;
+    }
+    .score-item-label { font-size: 0.7rem; color: #8892a4; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+    .score-item-val   { font-size: 1.7rem; font-weight: 800; line-height: 1; }
+    .score-item-val.high { color: #34d399; }
+    .score-item-val.mid  { color: #fbbf24; }
+    .score-item-val.low  { color: #f87171; }
+    .score-note { color: #8892a4; font-size: 0.83rem; }
+    .tag-list   { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag-green  { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25); border-radius: 999px; color: #34d399; font-size: 0.8rem; padding: 0.25rem 0.8rem; }
+    .tag-blue   { background: rgba(108,99,255,0.1); border: 1px solid rgba(108,99,255,0.25); border-radius: 999px; color: #a78bfa; font-size: 0.8rem; padding: 0.25rem 0.8rem; }
+    .improve-item {
+      background: #1e2535; border: 1px solid #2a3347; border-left: 3px solid #fbbf24;
+      border-radius: 0 8px 8px 0; padding: 0.9rem 1.1rem; margin-bottom: 0.6rem;
+    }
+    .improve-issue      { font-weight: 600; margin-bottom: 0.3rem; }
+    .improve-suggestion { color: #8892a4; font-size: 0.87rem; margin-bottom: 0.4rem; }
+    .improve-example {
+      background: #161b27; border: 1px solid #2a3347; border-radius: 6px;
+      font-family: 'Cascadia Code','Fira Code',Consolas,monospace;
+      font-size: 0.8rem; margin-top: 0.5rem; padding: 0.55rem 0.8rem;
+      white-space: pre-wrap; overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCREEN 1: Setup -->
+  <div id="screen-setup" class="screen active">
+    <h1>Skill <span class="accent">Tree</span></h1>
+
+    <div class="card">
+      <div>
+        <label for="subject">What do you want to learn?</label>
+        <input type="text" id="subject"
+               placeholder="e.g. Data Structures, Machine Learning…" />
+      </div>
+
+      <div>
+        <label>Skill level</label>
+        <div class="radio-group">
+          <input type="radio" name="proficiency" id="p-beg" value="Beginner" checked />
+          <label for="p-beg">🌱 Beginner</label>
+          <input type="radio" name="proficiency" id="p-int" value="Intermediate" />
+          <label for="p-int">🔥 Intermediate</label>
+          <input type="radio" name="proficiency" id="p-adv" value="Advanced" />
+          <label for="p-adv">🚀 Advanced</label>
+        </div>
+      </div>
+
+      <div>
+        <label>Course rigor</label>
+        <div class="radio-group">
+          <input type="radio" name="rigor" id="r-cas" value="Casual" />
+          <label for="r-cas">☕ Casual</label>
+          <input type="radio" name="rigor" id="r-std" value="Standard" checked />
+          <label for="r-std">📚 Standard</label>
+          <input type="radio" name="rigor" id="r-int" value="Intensive" />
+          <label for="r-int">⚡ Intensive</label>
+        </div>
+      </div>
+
+      <div id="status-msg" class="status-msg"></div>
+
+      <div id="gen-progress-wrap" class="gen-progress-wrap">
+        <div class="gen-progress-track">
+          <div id="gen-progress-fill" class="gen-progress-fill"></div>
+        </div>
+        <div id="gen-progress-label" class="gen-progress-label">Checking subject…</div>
+      </div>
+
+      <button class="btn" id="generate-btn" onclick="generateCourse()">
+        Build My Course
+      </button>
+    </div>
+  </div>
+
+
+  <!-- SCREEN 2: Course -->
+  <div id="screen-course" class="screen">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showScreen('screen-setup')">← New Course</button>
+      <div>
+        <div id="course-title"></div>
+        <div id="course-desc"></div>
+      </div>
+    </div>
+    <!-- prefetch progress bar removed — content loads lazily on module expand -->
+    <div class="module-list" id="module-list"></div>
+  </div>
+
+
+  <!-- SCREEN 3: Lesson -->
+  <div id="screen-lesson" class="screen">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showScreen('screen-course')">← Course</button>
+      <div id="lesson-breadcrumb" style="color:#8892a4;font-size:0.85rem;"></div>
+    </div>
+    <div class="lesson-body" id="lesson-body"></div>
+  </div>
+
+
+  <!-- SCREEN 4: Project -->
+  <div id="screen-project" class="screen">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showScreen('screen-course')">← Course</button>
+      <div id="project-breadcrumb" style="color:#8892a4;font-size:0.85rem;"></div>
+    </div>
+    <div class="project-body" id="project-body"></div>
+  </div>
+
+
+  <script>
+    // ── state ─────────────────────────────────────────────────────
+    var currentCourse     = null;
+    var currentProficiency = 'Beginner';
+    var currentRigor       = 'Standard';
+    // lessonCache[moduleId][lessonId] = lesson data object (or null while loading)
+    var lessonCache  = {};
+    // projectCache[moduleId] = project data object (or null while loading)
+    var projectCache = {};
+
+    // ── screen switching ──────────────────────────────────────────
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(function(s) {
+        s.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // ── status messages (setup screen) ────────────────────────────
+    function setStatus(msg, type) {
+      var el = document.getElementById('status-msg');
+      el.textContent = msg;
+      el.className = 'status-msg' + (type ? ' ' + type : '');
+      el.style.display = msg ? 'block' : 'none';
+    }
+
+    // ── generation progress bar ───────────────────────────────────
+    function setProgress(pct, label) {
+      var wrap  = document.getElementById('gen-progress-wrap');
+      var fill  = document.getElementById('gen-progress-fill');
+      var lbl   = document.getElementById('gen-progress-label');
+      if (pct === null) {
+        // hide
+        wrap.classList.remove('visible');
+        fill.style.width = '0%';
+      } else {
+        wrap.classList.add('visible');
+        fill.style.width = pct + '%';
+        if (lbl && label) lbl.textContent = label;
+      }
+    }
+
+    // ── generate course ───────────────────────────────────────────
+    async function generateCourse() {
+      var subject = document.getElementById('subject').value.trim();
+      if (!subject) { setStatus('Please enter a subject.', 'error'); return; }
+
+      currentProficiency = document.querySelector('input[name="proficiency"]:checked').value;
+      currentRigor       = document.querySelector('input[name="rigor"]:checked').value;
+      var btn = document.getElementById('generate-btn');
+
+      btn.disabled = true;
+      btn.textContent = 'Working…';
+      setStatus('', '');
+      setProgress(10, 'Checking subject…');
+
+      try {
+        var vRes  = await fetch('/api/validate-subject', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subject: subject })
+        });
+        var vData = await vRes.json();
+
+        if (!vData.valid) {
+          setProgress(null);
+          setStatus(vData.message || 'Please enter a computer science topic.', 'error');
+          return;
+        }
+
+        setProgress(40, 'Building your course…');
+
+        var res  = await fetch('/api/generate-course', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subject: vData.normalized || subject,
+                                 proficiency: currentProficiency, rigor: currentRigor })
+        });
+        var data = await res.json();
+
+        if (!res.ok || data.error) {
+          setProgress(null);
+          setStatus('Error: ' + (data.error || res.status), 'error');
+          return;
+        }
+
+        setProgress(100, 'Done!');
+
+        currentCourse = data;
+        lessonCache   = {};
+        projectCache  = {};
+        renderCourse(data);
+
+        // Brief pause so the user sees 100% before the screen switches
+        setTimeout(function() {
+          setProgress(null);
+          showScreen('screen-course');
+          // No eager prefetch — content loads lazily when modules are expanded
+        }, 350);
+
+      } catch (err) {
+        setProgress(null);
+        setStatus('Could not reach the server: ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Build My Course';
+      }
+    }
+
+    // ── lazy prefetch: fetch one module's content on first expand ─
+    function prefetchModule(mod) {
+      if (mod.type === 'lesson') {
+        if (!lessonCache[mod.id]) lessonCache[mod.id] = {};
+        (mod.lessons || []).forEach(function(lesson) {
+          // Skip if already fetched or in-flight
+          if (lessonCache[mod.id][lesson.id] !== undefined) return;
+          lessonCache[mod.id][lesson.id] = null; // mark in-flight
+          fetchLesson(mod, lesson);
+        });
+      } else if (mod.type === 'project') {
+        // Skip if already fetched or in-flight
+        if (projectCache[mod.id] !== undefined) return;
+        projectCache[mod.id] = null; // mark in-flight
+        fetchProject(mod);
+      }
+    }
+
+    function fetchLesson(mod, lesson) {
+      return fetch('/api/load-lesson', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_title:     currentCourse ? currentCourse.title : '',
+          module_title:     mod.title,
+          lesson_title:     lesson.title,
+          lesson_objective: lesson.objective || '',
+          proficiency:      currentProficiency,
+          rigor:            currentRigor
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!lessonCache[mod.id]) lessonCache[mod.id] = {};
+        lessonCache[mod.id][lesson.id] = data;
+      })
+      .catch(function(err) {
+        if (!lessonCache[mod.id]) lessonCache[mod.id] = {};
+        lessonCache[mod.id][lesson.id] = { error: err.message };
+      });
+    }
+
+    function fetchProject(mod) {
+      return fetch('/api/load-project', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          course_title:        currentCourse ? currentCourse.title : '',
+          project_title:       mod.title,
+          project_description: mod.description || mod.summary || '',
+          proficiency:         currentProficiency,
+          rigor:               currentRigor
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        projectCache[mod.id] = data;
+      })
+      .catch(function(err) {
+        projectCache[mod.id] = { error: err.message };
+      });
+    }
+
+    // ── render course map ─────────────────────────────────────────
+    function renderCourse(course) {
+      document.getElementById('course-title').textContent = course.title       || '';
+      document.getElementById('course-desc').textContent  = course.description || '';
+
+      var list = document.getElementById('module-list');
+      list.innerHTML = '';
+
+      (course.modules || []).forEach(function(mod) {
+        var card = document.createElement('div');
+
+        if (mod.type === 'project') {
+          // ── project card (expandable, same pattern as lesson) ──
+          card.className = 'module-card project-card';
+
+          var headerHTML =
+            '<div class="module-header">'
+          +   '<div class="module-header-left">'
+          +     '<span class="module-type-badge project-badge">🛠 Project</span>'
+          +     '<h3>' + esc(mod.title) + '</h3>'
+          +     '<p>' + esc(mod.summary || '') + '</p>'
+          +   '</div>'
+          +   '<span class="chevron">▶</span>'
+          + '</div>';
+
+          var projectRowHTML =
+            '<div class="lesson-list">'
+          +   '<div class="project-row" data-mod-id="' + mod.id + '">'
+          +     '<div>'
+          +       '<div class="project-row-title">🛠 ' + esc(mod.title) + '</div>'
+          +       '<div class="project-row-desc">' + esc(mod.description || mod.summary || '') + '</div>'
+          +     '</div>'
+          +     '<span class="project-row-arrow">›</span>'
+          +   '</div>'
+          + '</div>';
+
+          card.innerHTML = headerHTML + projectRowHTML;
+
+          card.querySelector('.module-header').addEventListener('click', function() {
+            card.classList.toggle('open');
+            if (card.classList.contains('open')) {
+              prefetchModule(mod);
+            }
+          });
+
+          card.querySelector('.project-row').addEventListener('click', function() {
+            var mId     = parseInt(card.querySelector('.project-row').dataset.modId);
+            var modData = currentCourse.modules.find(function(m) { return m.id === mId; });
+            openProject(modData);
+          });
+
+        } else {
+          // ── lesson module card (expandable) ──
+          var lessonCount = (mod.lessons || []).length;
+          card.className = 'module-card';
+
+          var headerHTML =
+            '<div class="module-header">'
+          +   '<div class="module-header-left">'
+          +     '<span class="module-type-badge lesson-badge">📖 ' + lessonCount + ' lesson' + (lessonCount !== 1 ? 's' : '') + '</span>'
+          +     '<h3>Module ' + mod.id + ': ' + esc(mod.title) + '</h3>'
+          +     '<p>' + esc(mod.summary || '') + '</p>'
+          +   '</div>'
+          +   '<span class="chevron">▶</span>'
+          + '</div>';
+
+          var lessonsHTML = '<div class="lesson-list">';
+          (mod.lessons || []).forEach(function(lesson) {
+            lessonsHTML +=
+              '<div class="lesson-row" data-mod-id="' + mod.id + '" data-lesson-id="' + lesson.id + '">'
+            +   '<div>'
+            +     '<div class="lesson-row-title">' + esc(lesson.title) + '</div>'
+            +     (lesson.objective ? '<div class="lesson-row-objective">' + esc(lesson.objective) + '</div>' : '')
+            +   '</div>'
+            +   '<span class="lesson-row-arrow">›</span>'
+            + '</div>';
+          });
+          lessonsHTML += '</div>';
+
+          card.innerHTML = headerHTML + lessonsHTML;
+
+        // toggle expand on header click — lazy-fetch lessons on first open
+          card.querySelector('.module-header').addEventListener('click', function() {
+            card.classList.toggle('open');
+            if (card.classList.contains('open')) {
+              prefetchModule(mod);
+            }
+          });
+
+          // open lesson on row click
+          card.querySelectorAll('.lesson-row').forEach(function(row) {
+            row.addEventListener('click', function() {
+              var mId = parseInt(row.dataset.modId);
+              var lId = parseInt(row.dataset.lessonId);
+              var modData    = currentCourse.modules.find(function(m) { return m.id === mId; });
+              var lessonData = modData.lessons.find(function(l) { return l.id === lId; });
+              openLesson(modData, lessonData);
+            });
+          });
+        }
+
+        list.appendChild(card);
+      });
+    }
+
+    // ── open lesson (reads from cache) ───────────────────────────
+    async function openLesson(mod, lesson) {
+      document.getElementById('lesson-breadcrumb').textContent =
+        (currentCourse ? currentCourse.title : '') + '  ›  Module ' + mod.id + ': ' + mod.title;
+
+      var body = document.getElementById('lesson-body');
+      showScreen('screen-lesson');
+
+      // Check cache
+      var cached = lessonCache[mod.id] && lessonCache[mod.id][lesson.id];
+
+      if (cached && cached.error) {
+        // Cached error — show it
+        body.innerHTML = '<p style="color:#f87171">Failed to load lesson: ' + esc(cached.error) + '</p>';
+        return;
+      }
+
+      if (cached) {
+        // Already loaded — render immediately
+        renderLesson(cached, body);
+        return;
+      }
+
+      // Still in-flight (null) or not started — show spinner and poll
+      body.innerHTML =
+        '<div class="spinner-wrap"><div class="spinner"></div><span>Loading lesson…</span></div>';
+
+      // Poll every 300 ms for up to 30 s
+      var waited = 0;
+      var interval = setInterval(function() {
+        waited += 300;
+        var result = lessonCache[mod.id] && lessonCache[mod.id][lesson.id];
+        if (result !== null && result !== undefined) {
+          clearInterval(interval);
+          if (result.error) {
+            body.innerHTML = '<p style="color:#f87171">Failed to load lesson: ' + esc(result.error) + '</p>';
+          } else {
+            renderLesson(result, body);
+          }
+        } else if (waited >= 30000) {
+          clearInterval(interval);
+          body.innerHTML = '<p style="color:#f87171">Lesson took too long to load. Please go back and try again.</p>';
+        }
+      }, 300);
+    }
+
+    // ── render lesson content ─────────────────────────────────────
+    function renderLesson(lesson, container) {
+      var codeHTML = (lesson.code_examples || []).map(function(ex) {
+        return '<div class="code-block">'
+          + '<div class="code-block-header">'
+          +   '<span class="code-lang">' + esc(ex.language) + '</span>'
+          +   '<button class="copy-btn" onclick="copyCode(this)">Copy</button>'
+          + '</div>'
+          + '<p class="code-desc" style="padding:0.5rem 1rem 0">' + esc(ex.description) + '</p>'
+          + '<pre>' + esc(ex.code) + '</pre>'
+          + '</div>';
+      }).join('');
+
+      var conceptsHTML = (lesson.key_concepts || []).map(function(c) {
+        return '<span class="concept-tag">' + esc(c) + '</span>';
+      }).join('');
+
+      var hintsHTML = (lesson.exercise && lesson.exercise.hints || []).map(function(h) {
+        return '<li>' + esc(h) + '</li>';
+      }).join('');
+
+      container.innerHTML =
+        '<h2>' + esc(lesson.title) + '</h2>'
+      + '<div class="lesson-objective-box">' + esc(lesson.objective || '') + '</div>'
+
+      + '<div class="lesson-section">'
+      +   '<div class="section-heading">Explanation</div>'
+      +   '<div class="explanation">' + renderMarkdown(lesson.explanation || '') + '</div>'
+      + '</div>'
+
+      + (codeHTML ? '<div class="lesson-section"><div class="section-heading">Code Examples</div>' + codeHTML + '</div>' : '')
+
+      + (conceptsHTML ? '<div class="lesson-section"><div class="section-heading">Key Concepts</div><div class="concepts">' + conceptsHTML + '</div></div>' : '')
+
+      + (lesson.exercise ? '<div class="lesson-section"><div class="section-heading">Exercise</div>'
+          + '<div class="exercise-box">'
+          +   '<p class="exercise-prompt">' + esc(lesson.exercise.prompt) + '</p>'
+          +   (hintsHTML ? '<button class="hints-btn" onclick="toggleHints(this)">💡 Show Hints</button><ul class="hints-list">' + hintsHTML + '</ul>' : '')
+          +   (lesson.exercise.solution_notes ? '<div class="solution-note">✅ ' + esc(lesson.exercise.solution_notes) + '</div>' : '')
+          + '</div></div>' : '');
+    }
+
+    // ── open project (reads from cache) ──────────────────────────
+    var currentProject = null;
+    var selectedFile   = null;
+
+    function openProject(mod) {
+      currentProject = mod;
+      selectedFile   = null;
+
+      document.getElementById('project-breadcrumb').textContent =
+        (currentCourse ? currentCourse.title : '') + '  ›  ' + mod.title;
+
+      var body = document.getElementById('project-body');
+      showScreen('screen-project');
+
+      var cached = projectCache[mod.id];
+
+      if (cached && cached.error) {
+        body.innerHTML = buildProjectShell(mod, null);
+        return;
+      }
+
+      if (cached) {
+        body.innerHTML = buildProjectShell(mod, cached);
+        wireFileDrop(mod);
+        return;
+      }
+
+      // Still in-flight — show spinner and poll
+      body.innerHTML =
+        '<div class="spinner-wrap"><div class="spinner"></div><span>Loading project brief…</span></div>';
+
+      var waited = 0;
+      var interval = setInterval(function() {
+        waited += 300;
+        var result = projectCache[mod.id];
+        if (result !== null && result !== undefined) {
+          clearInterval(interval);
+          body.innerHTML = buildProjectShell(mod, result.error ? null : result);
+          wireFileDrop(mod);
+        } else if (waited >= 30000) {
+          clearInterval(interval);
+          body.innerHTML = buildProjectShell(mod, null);
+          wireFileDrop(mod);
+        }
+      }, 300);
+    }
+
+    // Build the full project page HTML from cached brief data
+    function buildProjectShell(mod, brief) {
+      var goalsHTML = '';
+      var reqHTML   = '';
+      var hintsHTML = '';
+      var evalHTML  = '';
+      var stretchHTML = '';
+
+      if (brief) {
+        goalsHTML = (brief.learning_goals || []).map(function(g) {
+          return '<li>' + esc(g) + '</li>';
+        }).join('');
+
+        reqHTML = (brief.requirements || []).map(function(r) {
+          return '<li><strong>' + r.id + '.</strong> ' + esc(r.description) + '</li>';
+        }).join('');
+
+        hintsHTML = (brief.hints || []).map(function(h) {
+          return '<li>' + esc(h) + '</li>';
+        }).join('');
+
+        evalHTML = (brief.evaluation_criteria || []).map(function(c) {
+          return '<span class="concept-tag">' + esc(c) + '</span>';
+        }).join('');
+
+        stretchHTML = (brief.stretch_goals || []).map(function(s) {
+          return '<li>' + esc(s) + '</li>';
+        }).join('');
+      }
+
+      return (
+        '<div class="project-hero">'
+      +   '<div class="project-hero-label">🛠 Project</div>'
+      +   '<h2>' + esc(brief ? brief.title : mod.title) + '</h2>'
+      +   '<p>' + esc(brief ? brief.overview : (mod.description || mod.summary || '')) + '</p>'
+      + '</div>'
+
+      + (brief && goalsHTML ? '<div class="lesson-section"><div class="section-heading">Learning Goals</div><ul class="explanation" style="padding-left:1.4rem">' + goalsHTML + '</ul></div>' : '')
+
+      + (brief && reqHTML ? '<div class="lesson-section"><div class="section-heading">Requirements</div><ul class="explanation" style="padding-left:1.4rem">' + reqHTML + '</ul></div>' : '')
+
+      + (brief && brief.getting_started ? '<div class="lesson-section"><div class="section-heading">Getting Started</div><div class="explanation">' + renderMarkdown(brief.getting_started) + '</div></div>' : '')
+
+      + (brief && hintsHTML ? '<div class="lesson-section"><div class="section-heading">Hints</div><ul class="explanation" style="padding-left:1.4rem">' + hintsHTML + '</ul></div>' : '')
+
+      + (brief && evalHTML ? '<div class="lesson-section"><div class="section-heading">Evaluation Criteria</div><div class="concepts">' + evalHTML + '</div></div>' : '')
+
+      + (brief && stretchHTML ? '<div class="lesson-section"><div class="section-heading">Stretch Goals</div><ul class="explanation" style="padding-left:1.4rem">' + stretchHTML + '</ul></div>' : '')
+
+      + '<div class="feedback-panel">'
+      +   '<h3>📁 Submit Your Code for Feedback</h3>'
+      +   '<div class="file-drop" id="proj-file-drop" onclick="document.getElementById(\'proj-file-input\').click()">'
+      +     '<div class="file-drop-icon">📂</div>'
+      +     '<p id="proj-drop-text">Click to browse or drag &amp; drop your file here</p>'
+      +     '<p class="file-hint">Supported: .py .js .ts .java .c .cpp .cs .go .rb .rs</p>'
+      +   '</div>'
+      +   '<input type="file" id="proj-file-input" style="display:none" onchange="handleFileSelect(event)" />'
+      +   '<label class="feedback-notes-label">Notes for the reviewer <span style="font-weight:400;text-transform:none">(optional)</span></label>'
+      +   '<textarea id="proj-notes" rows="3" placeholder="e.g. I\'m unsure about my loop logic…"></textarea>'
+      +   '<button class="feedback-submit" id="proj-submit-btn" onclick="submitFeedback()">Get Feedback</button>'
+      +   '<div class="feedback-result" id="feedback-result"></div>'
+      + '</div>'
+      );
+    }
+
+    function wireFileDrop(mod) {
+      var drop = document.getElementById('proj-file-drop');
+      if (!drop) return;
+      drop.addEventListener('dragover',  function(e) { e.preventDefault(); drop.classList.add('dragover'); });
+      drop.addEventListener('dragleave', function()  { drop.classList.remove('dragover'); });
+      drop.addEventListener('drop', function(e) {
+        e.preventDefault(); drop.classList.remove('dragover');
+        var f = e.dataTransfer.files[0];
+        if (f) setSelectedFile(f);
+      });
+    }
+
+    function handleFileSelect(e) {
+      var f = e.target.files[0];
+      if (f) setSelectedFile(f);
+    }
+
+    function setSelectedFile(f) {
+      selectedFile = f;
+      document.getElementById('proj-drop-text').innerHTML =
+        '<span class="file-selected">📄 ' + esc(f.name) + '</span>';
+    }
+
+    async function submitFeedback() {
+      if (!selectedFile) { alert('Please select a code file first.'); return; }
+
+      var btn = document.getElementById('proj-submit-btn');
+      btn.disabled = true; btn.textContent = 'Reviewing…';
+
+      var form = new FormData();
+      form.append('file',                selectedFile);
+      form.append('proficiency',         currentProficiency);
+      form.append('context',             document.getElementById('proj-notes').value.trim());
+      form.append('project_description', currentProject ? (currentProject.description || currentProject.summary || '') : '');
+
+      try {
+        var res  = await fetch('/api/code-feedback', { method: 'POST', body: form });
+        var data = await res.json();
+        if (!res.ok || data.error) {
+          document.getElementById('feedback-result').innerHTML =
+            '<p style="color:#f87171;margin-top:1rem">Error: ' + esc(data.error || res.status) + '</p>';
+          return;
+        }
+        renderFeedback(data);
+      } catch (err) {
+        document.getElementById('feedback-result').innerHTML =
+          '<p style="color:#f87171;margin-top:1rem">Request failed: ' + esc(err.message) + '</p>';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Get Feedback';
+      }
+    }
+
+    function renderFeedback(fb) {
+      var sc = fb.score || {};
+      var scoreColor = function(n) { return n >= 8 ? 'high' : n >= 5 ? 'mid' : 'low'; };
+
+      var improvementsHTML = (fb.improvements || []).map(function(imp) {
+        return '<div class="improve-item">'
+          + '<div class="improve-issue">⚠️ ' + esc(imp.issue) + '</div>'
+          + '<div class="improve-suggestion">' + esc(imp.suggestion) + '</div>'
+          + (imp.example ? '<pre class="improve-example">' + esc(imp.example) + '</pre>' : '')
+          + '</div>';
+      }).join('');
+
+      var strengthsHTML = (fb.strengths || []).map(function(s) {
+        return '<span class="tag-green">' + esc(s) + '</span>';
+      }).join('');
+
+      var styleHTML = (fb.style_notes || []).map(function(s) {
+        return '<span class="tag-blue">' + esc(s) + '</span>';
+      }).join('');
+
+      var nextHTML = (fb.next_steps || []).map(function(s) {
+        return '<span class="tag-green">' + esc(s) + '</span>';
+      }).join('');
+
+      document.getElementById('feedback-result').innerHTML =
+        (fb.overall ? '<div class="fb-section"><div class="fb-label">Overall</div><div class="fb-overall">' + esc(fb.overall) + '</div></div>' : '')
+
+      + (sc.correctness !== undefined ? '<div class="fb-section"><div class="fb-label">Scores</div>'
+          + '<div class="score-grid">'
+          +   '<div class="score-item"><div class="score-item-label">Correctness</div><div class="score-item-val ' + scoreColor(sc.correctness) + '">' + sc.correctness + '<span style="font-size:0.9rem;color:#8892a4">/10</span></div></div>'
+          +   '<div class="score-item"><div class="score-item-label">Readability</div><div class="score-item-val ' + scoreColor(sc.readability) + '">' + sc.readability + '<span style="font-size:0.9rem;color:#8892a4">/10</span></div></div>'
+          +   '<div class="score-item"><div class="score-item-label">Efficiency</div><div class="score-item-val ' + scoreColor(sc.efficiency) + '">' + sc.efficiency + '<span style="font-size:0.9rem;color:#8892a4">/10</span></div></div>'
+          + '</div>'
+          + (sc.note ? '<p class="score-note">' + esc(sc.note) + '</p>' : '')
+          + '</div>' : '')
+
+      + (strengthsHTML ? '<div class="fb-section"><div class="fb-label">Strengths</div><div class="tag-list">' + strengthsHTML + '</div></div>' : '')
+      + (improvementsHTML ? '<div class="fb-section"><div class="fb-label">Areas to Improve</div>' + improvementsHTML + '</div>' : '')
+      + (styleHTML ? '<div class="fb-section"><div class="fb-label">Style &amp; Readability</div><div class="tag-list">' + styleHTML + '</div></div>' : '')
+      + (nextHTML  ? '<div class="fb-section"><div class="fb-label">Next Steps</div><div class="tag-list">' + nextHTML + '</div></div>' : '');
+
+      document.getElementById('feedback-result').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ── helpers ───────────────────────────────────────────────────
+    function toggleHints(btn) {
+      var list = btn.nextElementSibling;
+      list.classList.toggle('open');
+      btn.textContent = list.classList.contains('open') ? '🙈 Hide Hints' : '💡 Show Hints';
+    }
+
+    function copyCode(btn) {
+      var pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(function() {
+        btn.textContent = 'Copied!';
+        setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+      });
+    }
+
+    function renderMarkdown(text) {
+      var html = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+      html = html.replace(/^## (.+)$/gm,  '<h2>$1</h2>');
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+      html = html.replace(/^\s*[-*] (.+)$/gm, '<li>$1</li>');
+      html = html.replace(/(<li>[\s\S]*?<\/li>)/g, function(m) { return '<ul>' + m + '</ul>'; });
+      html = html.split(/\n\n+/).map(function(block) {
+        return /^<[hul]/.test(block.trim()) ? block : '<p>' + block.trim() + '</p>';
+      }).join('\n');
+      return html;
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    document.getElementById('subject').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') generateCourse();
+    });
+  </script>
+
+</body>
+</html>
