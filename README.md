@@ -2,6 +2,8 @@
 
 A dynamic computer science course generator powered by OpenAI GPT-4o-mini.
 
+# Running in Visual Studio Code recommended
+
 ## Setup
 
 1. Make sure python 3.10 + is installed.
@@ -16,6 +18,8 @@ python3 --version
 git clone https://github.com/kchoum/SkillTree-CPSC-254.git
 cd SkillTree-CPSC-254
 
+or Clone through your IDE's git clone features
+
 3. Create a virtual environment
 python -m venv .venv
 
@@ -24,6 +28,9 @@ Windows -
 .venv\Scripts\activate
 Mac/Linux
 source .venv/bin/activate
+
+you may need to enable restricted access through powershell with:
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 4. Install dependencies
 pip install -r requirements.txt
